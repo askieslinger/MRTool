@@ -1,0 +1,33 @@
+\documentclass{article}
+\include{preview}
+\usepackage[pdftex,active,tightpage]{preview}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{matrix}
+\begin{document}
+\begin{preview}
+%% TIKZ_CODE %%
+\begin{tikzpicture}[scale=.3, transform shape]
+	\begin{scope}
+	\tikzstyle{every node} = [circle, fill=gray!30,minimum size=80]
+	\node (g1)[fill=green!30,rectangle] at (-3, -4) {Genvariante G};
+	\node (x)[fill=blue!30] at (-3,0) {Risikofaktor X};
+	\node (g2)[fill=green!30,rectangle] at (3,-4) {Genvariante i.G};
+	\node (y)[fill=red!30] at (3,0){Outcome Y};
+	\node(u) at (0,3) {Stoerfaktor U};
+	\end{scope}
+	\draw[ ->] (g1) -- (x) node[pos=.5,left] {$GX$};
+	\draw[ ->] (g1) -- (y)  node[pos=.1,right] {$GY$};
+
+	\draw[ ->] (x) -- (y)  node[pos=.5,above] {$XY$};
+	\draw[ ->] (g2) -- (y)  node[pos=.5,right] {$i.GY$};
+	\draw[ ->] (g2) -- (x)  node[pos=.1,left] {$i.GX$};
+
+	\draw[->] (u) -- (x)  node[pos=.5,left] {$UX$};
+	\draw[->] (u) -- (y)  node[pos=.5,right] {$UY$};
+	\draw[->] (g1) -- (u)  node[pos=.1,right] {$GU$};
+	\draw[->] (g2) -- (u)  node[pos=.1,left] {$i.GU$};
+	
+\end{tikzpicture}
+\end{preview}
+\end{document}
