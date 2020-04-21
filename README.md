@@ -7,3 +7,6 @@ install:
   
 see vignette for examples:
 - browseVignettes('MRTool')
+
+usage:
+- library(MRTool)
