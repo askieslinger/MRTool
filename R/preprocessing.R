@@ -7,6 +7,7 @@
 #' @param genedose_test snp datatable. first two columns identifiers
 #' @param method used to compute correlation coefficient. 'pearson' (default), 'kendall' or 'spearman'
 #' @return
+#'
 #' @export
 #'
 get_corrs <- function(genedose_test,method='pearson') {

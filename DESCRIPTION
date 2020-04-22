@@ -23,5 +23,19 @@ LazyData: true
 RoxygenNote: 7.1.0
 Date: Sys.Date()
 VignetteBuilder: knitr
-Suggests: knitr, rmarkdown, broom, MendelianRandomization, ggplot2
-Imports: data.table, foreach
+Imports: 
+    data.table, 
+    foreach, 
+    broom, 
+    knitr,
+    rmarkdown,
+    MendelianRandomization, 
+    ggplot2
+Depends: 
+    stats,
+    utils,
+    datasets,
+    methods,
+    base
+
+
