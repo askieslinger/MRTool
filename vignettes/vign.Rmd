@@ -76,6 +76,7 @@ library(ggplot2)
 # SNPs erzeugen
 # alle SNP Daten müssen zwei Spalten Identifier haben
 # alle SNP Namen müssen ':' haben
+# V1 und V2 sind Platzhalter für Identifier bei echten Gendaten, hier ist der Wert egal
 #TODO
 genedata = data.table::data.table(
   V1 = c('id11', 'id21', 'id31'),
@@ -141,7 +142,18 @@ transformed = MRTool::transform_results(results, snp, iterations, pve_grid)
 
 mr_res = transformed$res_list
 mr_res_snp1 = mr_res[[1]]
+# Spalte power: Anteil der p-Werte des MR-Schätzers <0.05 pro Szenario über die iterations
+# caus_eff ist Lineare Regression zwischen X und Y in die Richtung der MR, also estimate_X_Y
+# für die kausale Richtung und estimate_Y_X für die antikausale MR.
+# Ergebnisse der MR sind 'Estimate', 'Std Error', 'P-Value', '95% CI upper' und '95% CI lower'. 
+# Im datatable davor sind Ergebnisse der LR und Parameter der Simulation. Am Ende des datatable sind die pves.
 
+```
+
+Es folgen einige Plots, die genutzt werden können, um die Simulationsdaten und das Ergebnis der MR zu veranschaulichen. Sie dienen als Beispiel, wie mit den erzeugten Datensets umgegangen werden kann.
+
+Dieser Plot zeigt eine Art, das Ergebnis der MR zu visualisieren. In diesem Szenario ohne Confounder sollten MR-Schätzer und lineare Regression identisch sein. Abweichungen entstehen dadurch, dass 10 Iterations zu wenig sind. 
+```{r}
 ggplot(data = mr_res_snp1,
        aes(x = assigned.effect_X_Y,
            color = factor(G_X))) +
@@ -159,7 +171,10 @@ ggplot(data = mr_res_snp1,
     x = 'Betakoeffizient xy',
     y = 'Schätzer xy'
   )
+```
 
+Dieser Plot zeigt, ob die Methode, die Betakoeffizienten über die erklärte Varianz zu bestimmen, funktioniert. Die beobachtete erklärte Varianz sollte der vorgegebenen entsprechen. Abweichungen entstehen, wenn der SNP nicht im HWE ist oder die Anzahl der Iterations zu gering.
+```{r}
 ggplot(data = mr_res_snp1,
        aes(x = G_X, color = factor(G_X))) +
   geom_abline(slope = 1, intercept = 0) +
@@ -171,7 +186,10 @@ ggplot(data = mr_res_snp1,
     y = 'GX real',
     x = 'GX vorgegeben'
   )
+```
 
+Dieser Plot zeigt den Median der Standardabweichung des Schätzers der MR für verschiedene Instrumentenstärken.
+```{r}
 ggplot(data = mr_res_snp1,
        aes(assigned.effect_X_Y,
            `Std Error`,

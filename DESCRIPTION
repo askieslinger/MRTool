@@ -30,7 +30,8 @@ Imports:
     knitr,
     rmarkdown,
     MendelianRandomization, 
-    ggplot2
+    ggplot2,
+    parallel
 Depends: 
     stats,
     utils,

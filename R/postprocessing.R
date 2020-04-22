@@ -11,7 +11,14 @@
 #' @param pve_grid grid of percentages of variance explained as output of cal_betas
 #'
 #' @return list(res_list,sim_data). res_list
-#' is list of regression results and mr results. sim_data is result of simulation
+#'     is list of regression results and mr results. sim_data is result of simulation.
+#'     'power' is proportion of p-value <0.05 of MR estimate per scenario over all iterations.
+#'     caus_eff ist Lineare Regression zwischen X und Y in die Richtung der MR, also estimate_X_Y
+#'     für die kausale Richtung und estimate_Y_X für die antikausale MR.
+#'     Ergebnisse der MR sind 'Estimate', 'Std Error', 'P-Value', '95% CI upper'
+#'     und '95% CI lower'.
+#'     Im datatable davor sind Ergebnisse der LR und Parameter der Simulation.
+#'     Am Ende des datatable sind die pves.
 #'
 #' @export
 #'
