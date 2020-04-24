@@ -203,6 +203,11 @@ ggplot(data = mr_res_snp1,
 
 ## Szenario mit 2 Genvarianten
 
+Der Vorgang bei mehreren Genvarianten funktioniert genau so wie bei einer Genvariante. In der Variable pves wird festgelegt, welcher SNP wie auf X und Y wirkt. 
+
+Durch die Variable rev kann festgelegt werden, ob die MR in die kausale oder antikausale Richtung durchgeführt werden soll. 
+
+In diesem Beispiel werden aus dem oben verwendeten Beispielset genedata die zwei SNPs mit der geringsten Korrelation ausgewählt und die Ergebnisse der MR angeschaut für das Szenario, das ein SNP auf X wirkt und der andere auf Y, für verschiedene Instrumentenstärken. 
 
 ```{r,fig.width=5,fig.height=5}
 # aus dem Set genedata korrelierte SNPs raussuchen
@@ -293,8 +298,9 @@ res[, corr_scen := factor(
   corr_scen,
   levels = c('neg_high', 'neg_low', 'lowest', 'pos_low', 'pos_high'),
   ordered = T
-)]
+)] 
 
+# je nach Richtung der MR soll die richtige Richtung der LR mit der MR verglichen werden
 lr_est = ''
 if (rev) {
   res[, caus_eff := estimate_Y_X]
@@ -305,6 +311,12 @@ if (rev) {
 }
 
 res_2 <- split(res, by = 'snp_type')
+```
+
+Dieser Plot zeigt das Ergebnis der MR in der kausalen Richtung für verschiedene Instrumentenstärken, wenn der richtige SNP als Instrument für X verwendet wird. Die Facetten zeigen die unterschiedlichen Szenarios, wenn die SNPs auf X und Y unterschiedlich stark einwirken.
+Die SNPs sind relativ stark korreliert, daher findet die MR nicht den kausalen Effekt, außer wenn der ysnp nur schwach auf Y wirkt. 
+
+```{r}
 
 ggplot(data = res_2$xsnp, aes(x = assigned.effect_X_Y,
                               color = corr_scen)) +
@@ -340,7 +352,11 @@ ggplot(data = res_2$xsnp, aes(x = assigned.effect_X_Y,
     y = 'Kausalschätzer'
   )+
   theme(legend.position='bottom',legend.box='vertical')
+```
 
+Dieser Plot zeigt das Ergebnis der MR, wenn der falsche SNP als Instrument für X verwendet wird, nämlich der, der auf Y einwirkt. Die Facetten zeigen die Stärken der Beziehungen der SNPs auf X und Y. Der kausale Effekt wird nicht erkannt.
+
+```{r}
 ggplot(data = res_2$ysnp,
        aes(x = assigned.effect_X_Y,
            color = corr_scen)) +
