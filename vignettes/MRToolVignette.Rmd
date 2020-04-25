@@ -152,7 +152,7 @@ mr_res_snp1 = mr_res[[1]]
 
 Es folgen einige Plots, die genutzt werden können, um die Simulationsdaten und das Ergebnis der MR zu veranschaulichen. Sie dienen als Beispiel, wie mit den erzeugten Datensets umgegangen werden kann.
 
-Dieser Plot zeigt eine Art, das Ergebnis der MR zu visualisieren. In diesem Szenario ohne Confounder sollten MR-Schätzer und lineare Regression identisch sein. Abweichungen entstehen dadurch, dass 10 Iterations zu wenig sind. 
+Der nächste Plot zeigt eine Art, das Ergebnis der MR zu visualisieren. In diesem Szenario ohne Confounder sollten MR-Schätzer und lineare Regression identisch sein. Abweichungen entstehen dadurch, dass 10 Iterations zu wenig sind. 
 ```{r}
 ggplot(data = mr_res_snp1,
        aes(x = assigned.effect_X_Y,
@@ -173,7 +173,7 @@ ggplot(data = mr_res_snp1,
   )
 ```
 
-Dieser Plot zeigt, ob die Methode, die Betakoeffizienten über die erklärte Varianz zu bestimmen, funktioniert. Die beobachtete erklärte Varianz sollte der vorgegebenen entsprechen. Abweichungen entstehen, wenn der SNP nicht im HWE ist oder die Anzahl der Iterations zu gering.
+Der nächste Plot zeigt, ob die Methode, die Betakoeffizienten über die erklärte Varianz zu bestimmen, funktioniert. Die beobachtete erklärte Varianz sollte der vorgegebenen entsprechen. Abweichungen entstehen, wenn der SNP nicht im HWE ist oder die Anzahl der Iterations zu gering.
 ```{r}
 ggplot(data = mr_res_snp1,
        aes(x = G_X, color = factor(G_X))) +
@@ -188,7 +188,7 @@ ggplot(data = mr_res_snp1,
   )
 ```
 
-Dieser Plot zeigt den Median der Standardabweichung des Schätzers der MR für verschiedene Instrumentenstärken.
+Der nächste Plot zeigt den Median der Standardabweichung des Schätzers der MR für verschiedene Instrumentenstärken.
 ```{r}
 ggplot(data = mr_res_snp1,
        aes(assigned.effect_X_Y,
@@ -313,10 +313,10 @@ if (rev) {
 res_2 <- split(res, by = 'snp_type')
 ```
 
-Dieser Plot zeigt das Ergebnis der MR in der kausalen Richtung für verschiedene Instrumentenstärken, wenn der richtige SNP als Instrument für X verwendet wird. Die Facetten zeigen die unterschiedlichen Szenarios, wenn die SNPs auf X und Y unterschiedlich stark einwirken.
+Der nächste Plot zeigt das Ergebnis der MR in der kausalen Richtung für verschiedene Instrumentenstärken, wenn der richtige SNP als Instrument für X verwendet wird. Die Facetten zeigen die unterschiedlichen Szenarios, wenn die SNPs auf X und Y unterschiedlich stark einwirken.
 Die SNPs sind relativ stark korreliert, daher findet die MR nicht den kausalen Effekt, außer wenn der ysnp nur schwach auf Y wirkt. 
 
-```{r}
+```{r,fig.width=5,fig.height=5}
 
 ggplot(data = res_2$xsnp, aes(x = assigned.effect_X_Y,
                               color = corr_scen)) +
@@ -354,9 +354,9 @@ ggplot(data = res_2$xsnp, aes(x = assigned.effect_X_Y,
   theme(legend.position='bottom',legend.box='vertical')
 ```
 
-Dieser Plot zeigt das Ergebnis der MR, wenn der falsche SNP als Instrument für X verwendet wird, nämlich der, der auf Y einwirkt. Die Facetten zeigen die Stärken der Beziehungen der SNPs auf X und Y. Der kausale Effekt wird nicht erkannt.
+Der nächste Plot zeigt das Ergebnis der MR, wenn der falsche SNP als Instrument für X verwendet wird, nämlich der, der auf Y einwirkt. Die Facetten zeigen die Stärken der Beziehungen der SNPs auf X und Y. Der kausale Effekt wird nicht erkannt.
 
-```{r}
+```{r,fig.width=5,fig.height=5}
 ggplot(data = res_2$ysnp,
        aes(x = assigned.effect_X_Y,
            color = corr_scen)) +
